@@ -93,10 +93,14 @@ def check_ip(ip_check,ip2_check):
 	if ipaddress.ip_address(dest_ip).is_private == True or ip_check == ip2_check:
 		return
 	else:
-		#elif current != new:
+
 		clear() 
 		response_time = ping('ping -n 1 {} | FIND "TTL="'.format(dest_ip)) # pings the server
-		print('Game Server IP: {} Response time: {}ms'.format(current,response_time), sep=' ', end='\n', flush=True)
+		if response_time == None:
+			pass
+		else:
+			response_time_list.append(int(response_time))
+		print('Game Server IP: {} Response time: {}ms'.format(current,response_time_list[-1]), sep=' ', end='\n', flush=True)
 		if response_time is None:
 			return
 		elif response_time < 120:
@@ -128,6 +132,8 @@ def check_ip(ip_check,ip2_check):
 ip_flag = '0.0.0.0'
 global ip_list
 ip_list = []
+global response_time_list
+response_time_list = []
 
 # This is the main function 
 while True:
